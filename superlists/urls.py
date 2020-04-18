@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.conf.urls import include, url
-import lists
+from lists import views
 
 urlpatterns = [
     # re_path('^admin/', admin.site.urls),
-    re_path(r'^$', lists.views.home_page, name='home')
+    re_path(r'^$', views.home_page, name='home')
 ]
