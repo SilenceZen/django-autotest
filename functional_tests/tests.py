@@ -91,6 +91,20 @@ class NewVisitorTest(LiveServerTestCase):
         # 伊迪丝想知道这个网站是否会记住她的清单
         # 她看到网站为她生成了一个唯一的URL
         # 页面中有一些文字解说这个功能
-        self.fail('Finish the test')
+        # self.fail('Finish the test')
 
         # 她访问那个URL，发现待办事项清单还在
+
+    def test_layout_and_styling(self):
+        # 伊迪丝访问首页
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # 她看到啊输入框完美地居中显示
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('testing\\n')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
