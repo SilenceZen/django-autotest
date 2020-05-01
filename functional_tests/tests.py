@@ -7,12 +7,17 @@ import time
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome(options=self.delete_devtools_listening())
         self.browser.implicitly_wait(3)
 
         
     def tearDown(self):
         self.browser.quit()
+
+    def delete_devtools_listening(self):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        return options
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
@@ -38,7 +43,6 @@ class NewVisitorTest(LiveServerTestCase):
         # 她按回车键猴，被带到了一个新URL
         # 这个页面的待办事项清单中显示了“1: Buy peacock feathers”
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(0.1)
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
@@ -58,7 +62,7 @@ class NewVisitorTest(LiveServerTestCase):
         ## 我们使用一个新浏览器对话
         ## 确保伊迪丝的信息不会从cookie中泄露出来
         self.browser.quit()
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome(options=self.delete_devtools_listening())
 
         # 弗朗西斯访问网页
         # 页面中看不到伊迪丝的清单
@@ -72,7 +76,6 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(0.1)
 
         # 弗朗西斯获得了他的唯一URL
         francis_list_url = self.browser.current_url
