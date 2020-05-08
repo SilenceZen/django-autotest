@@ -12,7 +12,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def setUpClass(cls):
         for arg in sys.argv:
             if 'liveserver' in arg:
-                cls.server_url = 'http://superlists-staging.ottg.eu'
+                cls.server_url = 'http://47.103.1.96/'
                 return #
             super().setUpClass()
     
