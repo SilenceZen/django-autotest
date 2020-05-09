@@ -10,16 +10,12 @@ class NewVisitorTest(StaticLiveServerTestCase):
     
     @classmethod
     def setUpClass(cls):
-        for arg in sys.argv:
-            if 'liveserver' in arg:
-                cls.server_url = 'http://47.103.1.96/'
-                return #
-            super().setUpClass()
+        cls.server_url = 'http://47.103.1.96/'
+        super().setUpClass()
     
     @classmethod
-    def tearDownClass(cls):
-        if cls.server_url == cls.live_server_url:
-            super().tearDownClass()
+    def tearDownClass(cls):\
+        super().tearDownClass()
 
     def setUp(self):
         self.browser = webdriver.Chrome(options=self.delete_devtools_listening())
